@@ -24,6 +24,7 @@ public class UsuarioController {
         return new ResponseEntity<>(usuarioFacade.salvar(usuarioRequestBody), HttpStatus.CREATED);
     }
 
+    @Operation(summary = "Busca por id")
     @GetMapping("/usuarios/{id}")
     public ResponseEntity<UsuarioResponseBody> getPorId(@PathVariable Long id) {
         return new ResponseEntity<>(usuarioFacade.buscaPorId(id), HttpStatus.OK);
@@ -31,12 +32,14 @@ public class UsuarioController {
 
     // colocar get aqui
 
+    @Operation(summary = "Atualiza usuário")
     @PutMapping("/usuarios/{id}")
     public ResponseEntity<UsuarioResponseBody> atualizar(@Valid @RequestBody UsuarioRequestBody usuarioRequestBody,
                                                          @PathVariable Long id) {
         return new ResponseEntity<>(usuarioFacade.atualizar(usuarioRequestBody, id), HttpStatus.OK);
     }
 
+    @Operation(summary = "Deleta usuário")
     @DeleteMapping("/usuarios/{id}")
     public ResponseEntity<Void> deletar(@PathVariable Long id) {
         usuarioFacade.deletar(id);
