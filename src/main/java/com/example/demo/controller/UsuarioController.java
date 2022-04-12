@@ -7,10 +7,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
@@ -25,6 +22,25 @@ public class UsuarioController {
     @PostMapping
     public ResponseEntity<UsuarioResponseBody> salvar(@Valid @RequestBody UsuarioRequestBody usuarioRequestBody) {
         return new ResponseEntity<>(usuarioFacade.salvar(usuarioRequestBody), HttpStatus.CREATED);
+    }
+
+    @GetMapping("/usuarios/{id}")
+    public ResponseEntity<UsuarioResponseBody> getPorId(@PathVariable Long id) {
+        return new ResponseEntity<>(usuarioFacade.buscaPorId(id), HttpStatus.OK);
+    }
+
+    // colocar get aqui
+
+    @PutMapping("/usuarios/{id}")
+    public ResponseEntity<UsuarioResponseBody> atualizar(@Valid @RequestBody UsuarioRequestBody usuarioRequestBody,
+                                                         @PathVariable Long id) {
+        return new ResponseEntity<>(usuarioFacade.atualizar(usuarioRequestBody, id), HttpStatus.OK);
+    }
+
+    @DeleteMapping("/usuarios/{id}")
+    public ResponseEntity<Void> deletar(@PathVariable Long id) {
+        usuarioFacade.deletar(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
 }
